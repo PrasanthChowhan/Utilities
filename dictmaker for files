@@ -1,0 +1,47 @@
+# This code searches the files and group them into disctonery 
+# all files in one directorey are in one dictonary 
+
+
+import os
+path = '../Assets'
+
+Assets = os.listdir( path )
+
+#  works only for one level down files 
+
+filelist = []
+dictonary = {}
+divison = []
+images = []
+location = []
+imgloclist = []
+
+count = 0
+for root, dirs, files in os.walk(path):
+   
+    for file in files:
+        name = os.path.join(root,file).replace('\\','/')
+       
+    
+        filelist.append(name)
+        split_name = name.split('/')
+        if split_name[2] not in divison:
+            divison.append(split_name[2])
+        img_suffremove = split_name[3].removesuffix('.png')
+        images.append(img_suffremove)
+        location.append(name)
+    
+    imgl = dict(zip(images,location)) 
+    imgloclist.append(imgl)
+  
+    
+    images = []
+    location = []
+    
+#print all the file names
+img_location_dict = list(filter(None,(imgloclist)))
+
+assetjson = dict(zip(divison,img_location_dict))
+
+print(assetjson)
+
